@@ -1,0 +1,37 @@
+
+--1)Step -  1 (Java UDF CODE)
+
+HiveUdf.java
+
+--2) Export jar
+
+HiveConcat.jar
+
+--3) Create table
+
+create table empArray(empName string, empDesignation array<string>) row format delimited
+fields terminated by '\t' collection items terminated by ',';
+
+--4) Load Data into table
+
+load data local inpath '/home/cloudera/Desktop/Acadgild/Hive/Assignment_8_2/empArrayDataset' into table empArray;
+
+--5) Checking the loaded data
+
+select * from empArray;
+
+--6) Add Jar in Hive 
+
+add jar /home/cloudera/Desktop/Acadgild/Hive/Assignment_8_2/HiveConcat.jar;
+
+--7) Creating Temporaray Function
+
+create temporary function concat as 'HiveUdf';
+
+--8) Output
+
+select concat(empName,empDesignation) from empArray;
+
+
+
+
